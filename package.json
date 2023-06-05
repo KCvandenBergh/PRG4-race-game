@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --outDir=docs --base=./"
+    "build": "vite build --outDir=docs --base=/PRG4-race-game/"
   },
   "devDependencies": {
     "vite": "^4.2.0"
