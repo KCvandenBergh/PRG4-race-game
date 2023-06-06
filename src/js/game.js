@@ -94,7 +94,7 @@ export class Game extends Engine {
         });
 
 
-        // Zwaartekracht en grondcontrole
+        //Zwaartekracht en grondcontrole
         this.onPostUpdate = () => {
             if (!character.grounded) {
                 character.vel = character.vel.addEqual(new Vector(0, 15));

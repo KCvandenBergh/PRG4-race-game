@@ -4,7 +4,6 @@ import { Resources, ResourceLoader } from './resources.js';
 export class Spacegun extends Actor {
     constructor() {
         super({ width: 100, height: 100 });
-        // this.body.collider.type = CollisionType.PreventCollision;
         this.scale = new Vector(0.2, 0.2)
     }
 
