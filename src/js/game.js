@@ -139,20 +139,20 @@ export class Game extends Engine {
 
 
         // Horizontale beweging met de pijltoetsen
-        character.update = function (engine, delta) {
-            Actor.prototype.update.call(this, engine, delta);
+        // character.update = function (engine, delta) {
+        //     Actor.prototype.update.call(this, engine, delta);
 
-            if (!character.grounded) {
-                // Beweeg naar links met de linkerpijl
-                if (engine.input.keyboard.isHeld(Input.Keys.Left)) {
-                    character.pos.x -= 5; // Pas de bewegingssnelheid aan naar wens
-                }
-                // Beweeg naar rechts met de rechterpijl
-                if (engine.input.keyboard.isHeld(Input.Keys.Right)) {
-                    character.pos.x += 5; // Pas de bewegingssnelheid aan naar wens
-                }
-            }
-        };
+        //     if (!character.grounded) {
+        //         // Beweeg naar links met de linkerpijl
+        //         if (engine.input.keyboard.isHeld(Input.Keys.Left)) {
+        //             character.pos.x -= 5; // Pas de bewegingssnelheid aan naar wens
+        //         }
+        //         // Beweeg naar rechts met de rechterpijl
+        //         if (engine.input.keyboard.isHeld(Input.Keys.Right)) {
+        //             character.pos.x += 5; // Pas de bewegingssnelheid aan naar wens
+        //         }
+        //     }
+        // };
 
         this.add(character); // Voeg het personage toe na de achtergrondafbeelding
     }

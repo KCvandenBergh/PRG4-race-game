@@ -1,9 +1,10 @@
 import { Actor, Engine, Vector, Physics, CollisionType } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
+import { Human } from "./human.js";
 
-export class Enemy extends Actor {
+export class Enemy extends Human {
     constructor() {
-        super({ width: 600, height: 600 });
+        super();
         this.scale = new Vector(0.2, 0.2)
     }
 
