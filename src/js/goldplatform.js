@@ -1,22 +1,21 @@
 import { Actor, Engine, Vector, Physics, CollisionType } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
-// import { Spacegun } from './spacegun';
-import { Enemy } from "./enemy.js";
+import { Spacegun } from './spacegun';
 
 
-export class Platform extends Actor {
+export class Goldplatform extends Actor {
 
     constructor() {
-        super({ width: 400, height: 50 })
+        super({ width: 300, height: 70 })
         this.body.collisionType = CollisionType.Fixed
     }
 
     onInitialize(engine) {
-        this.graphics.use(Resources.Platform.toSprite());
+        this.graphics.use(Resources.Goudenpatform.toSprite());
 
         // composition  
-        let enemy = new Enemy()
-        this.addChild(enemy)
+        let spacegun = new Spacegun()
+        this.addChild(spacegun)
 
         // this.body.collider.type = 'fixed'; // Zorg ervoor dat het platform geen invloed heeft op de beweging van het personage
     }

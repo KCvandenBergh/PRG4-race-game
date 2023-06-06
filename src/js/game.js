@@ -1,11 +1,19 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, Input } from "excalibur";
+import { Actor, Engine, Vector, Input, Physics, CollisionType, Label, FontUnit, Font, Color } from "excalibur";
 import { Resources, ResourceLoader } from './resources.js';
 import { Platform } from './platform';
+import { Spacegun } from './spacegun';
+import { Character } from './character';
+import { Enemy } from './enemy';
+import { Goldplatform } from './goldplatform';
 
 export class Game extends Engine {
+    score = 0;
     constructor() {
         super({ width: 1550, height: 715 });
+        Physics.useArcadePhysics()
+        Physics.gravity = new Vector(0, 800)
+        this.showDebug(true)
         this.backgroundColor = "transparent"; // Achtergrondkleur van het canvas
         this.start(ResourceLoader).then(() => this.startGame());
     }
@@ -14,13 +22,7 @@ export class Game extends Engine {
         console.log("start de game!");
 
         // character ophalen vanuit de resources
-        const character = new Actor();
-        character.graphics.use(Resources.Character.toSprite());
-        character.pos = new Vector(400, 300);
-        character.vel = new Vector(-10, 0);
-        character.jumpHeight = 5; // Hoogte van de sprong
-        character.jumpSpeed = 1700; // Snelheid van de sprong
-        character.grounded = true; // Grondstatus van het personage
+        const character = new Character();
 
 
         // Achtergrondafbeelding toevoegen
@@ -38,16 +40,49 @@ export class Game extends Engine {
 
         this.add(background);
 
+        // Scorelabel aanmaken
+        // const scoreLabel = new Label(`Score: ${this.score}`);
+        // scoreLabel.pos = new Vector(100, 100);
+        // this.add(scoreLabel);
 
-        // Platform voor Yuki om op te springen
+        const scoreLabel = new Label({
+            text: (`Score: ${this.score}`),
+            pos: new Vector(1200, 100),
+            font: new Font({
+                family: 'impact',
+                size: 24,
+                unit: FontUnit.Px,
+                color: 'white'
+
+            })
+        });
+        this.add(scoreLabel);
+
+
+        // Platform waar Yuki niet op mag springen omdat er een enemy op staat
         const platform = new Platform();
         this.add(platform);
-        platform.pos = new Vector(600, 500);
+        platform.pos = new Vector(20, 300);
 
 
         const platformTwo = new Platform();
         this.add(platformTwo);
-        platform.pos = new Vector(200, 100);
+        platformTwo.pos = new Vector(200, 600);
+
+        // Gouden platform waar de spaceguns op staan
+        const goldplatform = new Goldplatform();
+        this.add(goldplatform);
+        goldplatform.pos = new Vector(1100, 500);
+
+        //Gun in canvas
+        const spacegun = new Spacegun();
+        this.add(spacegun);
+        spacegun.pos = new Vector(100, 200);
+
+        //Enemy in canvas
+        const enemy = new Enemy();
+        this.add(enemy);
+        enemy.pos = new Vector(50, 100);
 
 
         // Springen wanneer de spatiebalk wordt ingedrukt
@@ -90,6 +125,17 @@ export class Game extends Engine {
                 character.grounded = true;
             }
         };
+
+        // Detecteer botsing tussen personage en spacegun
+        character.on('collisionstart', (evt) => {
+            if (evt.other instanceof Spacegun) {
+                spacegun.kill();
+                console.log("verwijderd");
+                // increaseScore(); // Verhoog de score
+                this.score++
+                scoreLabel.text = `Score: ${this.score}`; // Scorelabel bijwerken
+            }
+        });
 
 
         // Horizontale beweging met de pijltoetsen
